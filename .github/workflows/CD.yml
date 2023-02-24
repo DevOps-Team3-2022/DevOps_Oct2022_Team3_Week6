@@ -35,12 +35,12 @@ jobs:
       if: always()
       with:
         junit_files: "report.xml"
-
-    - name: Move file
-      run: mv *.xml .github/report.xml
         
     - name: Make directory
       run: mkdir -p path/to/artifact
+      
+    - name: Move file
+      run: mv *.xml path/to/artifact/report.xml
 
     - uses: actions/upload-artifact@v3
       with:
