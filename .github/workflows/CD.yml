@@ -2,6 +2,8 @@ name: CD for Hello World
 
 on:
   push:
+    tags:
+      - 'v*'
     
 jobs:
   build:
@@ -62,7 +64,6 @@ jobs:
         tag_name: ${{ env.RELEASE_VERSION }}
         release_name: Release ${{env.RELEASE_VERSION }}
         prerelease: true
-        allowUpdates: true
         
     - name: Archive content
       uses: thedoctor0/zip-release@master
