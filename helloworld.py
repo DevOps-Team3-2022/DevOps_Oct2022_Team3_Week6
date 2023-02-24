@@ -1,10 +1,6 @@
-def helloworld(input):
-    if not input.strip():
-        print("Input string is empty!");
-        return "Input string is empty!"
-    elif len(input) > 10:
-        print("Input string too long!");
+def hello_world(name):
+    if len(name) == 0:
+        return "Input string is empty!"        
+    elif len(name) > 10:
         return "Input string too long!"
-    else:
-        print("Hello " + input + "! Welcome to Hello World File!");
-        return "Hello " + input + "! Welcome to Hello World File!"
+    return f"Hello {name}! Welcome to Hello World File!"
