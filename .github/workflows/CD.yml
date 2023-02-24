@@ -2,6 +2,8 @@ name: CD for Hello World
 
 on:
   push:
+    tags:
+      - 'v*'
     
 jobs:
   build:
@@ -46,13 +48,12 @@ jobs:
       with:
         name: my-artifact
         path: path/to/artifact/
-    
-    - name: Set environment version
-      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-        
     - uses: actions/download-artifact@v3
       with:
         name: my-artifact
+    
+    - name: Set environment version
+      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
         
     - name: create release
       id: create-new-release
@@ -63,3 +64,20 @@ jobs:
         tag_name: ${{ env.RELEASE_VERSION }}
         release_name: Release ${{env.RELEASE_VERSION }}
         prerelease: true
+        
+    - name: Archive content
+      uses: thedoctor0/zip-release@master
+      with:
+        filename: files.zip
+    - name: upload release asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+      with:
+        upload_url: ${{ steps.create-new-release.outputs.upload_url }}
+        asset_path: ./content.zip
+        asset_name: ${{ env.RELEASE_VERSION }}.zip
+        asset_content_type: applications/zip
+
+    - name: Display structure of downloaded files
+      run: ls -R
