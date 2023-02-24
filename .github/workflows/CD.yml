@@ -9,17 +9,35 @@ jobs:
     steps:
     - uses: actions/setup-python@v2
       with:
-        python-version: 3.11
+        python-version: 3.11.1
     - name: Install Libraries
       run: |
         pip install flake8 pytest pytest-cov
     - name: Checkout Own Repo
       uses: actions/checkout@v2
       with:
-        repository: DevOps-Team3-2022/DevOps_Oct2022_Team3_Week6
+        repository: DevOps-Team3-2022/DevOps_Oct2022_Team3_Week4
     - name: list our contents
       run: |
         ls
+    - name: test with pytest
+      run: |
+        pytest test.py -v -cov --junitxml=report.xml
+    - if: ${{ failure() }}
+      uses: JasonEtco/create-an-issue@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        filename: .github/ISSUE_TEMPLATE.md
+  
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action/composite@v2
+      if: always()
+      with:
+        junit_files: "report.xml"
+
+    - name: Move file
+      run: mv *.xml .github/report.xml
         
     - name: Make directory
       run: mkdir -p path/to/artifact
