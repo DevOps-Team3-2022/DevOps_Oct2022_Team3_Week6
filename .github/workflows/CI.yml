@@ -2,10 +2,12 @@ name: CI for Hello World
 
 on:
   push:
-    
+  
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: "!contains(github.ref, 'refs/tags/')"
+    # rest of the job configuration
     steps:
     - uses: actions/setup-python@v2
       with:
