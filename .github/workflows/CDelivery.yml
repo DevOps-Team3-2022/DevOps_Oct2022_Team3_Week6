@@ -16,7 +16,7 @@ jobs:
     - name: Checkout Own Repo
       uses: actions/checkout@v2
       with:
-        repository: DevOps-Team5-2022/DevOps_Oct2022_Team5_Week6
+        repository: DevOps-Team3-2022/DevOps_Oct2022_Team3_Week6
     - name: list our contents
       run: |
         ls
