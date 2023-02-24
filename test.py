@@ -1,11 +1,14 @@
+from helloworld import hello_world
 import pytest
-from helloworld import *
-def success_string():
-  result1 = helloworld("item")
-  assert result1 == "Hello item! Welcome to Hello World File!"
-def length_test():
-  result2 = helloworld("Stringtoolong")
+
+def test_test():
+  result1 = hello_world("Test")
+  assert result1 == "Hello Test! Welcome to Hello World File!"
+
+def test_toolong():
+  result2 = hello_world(".........................")
   assert result2 == "Input string too long!"
-def empty_test():
-  result3 = helloworld("")
+
+def test_empty():
+  result3 = hello_world("")
   assert result3 == "Input string is empty!"
