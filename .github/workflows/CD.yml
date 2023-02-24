@@ -20,6 +20,9 @@ jobs:
     - name: list our contents
       run: |
         ls
+        
+    - name: Make directory
+      run: mkdir -p path/to/artifact
 
     - uses: actions/upload-artifact@v3
       with:
